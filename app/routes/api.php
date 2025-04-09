@@ -1,5 +1,6 @@
 <?php
 
+use App\Controller\HomeController;
 use App\Controller\LinkController;
 
 return [
@@ -10,5 +11,10 @@ return [
     '/([a-zA-Z0-9]{6})' => [
         'controller' => LinkController::class,
         'method' => 'getLink'
+    ],
+
+    '/' => [
+        'controller' => HomeController::class,
+        'method' => 'index'
     ]
 ];
