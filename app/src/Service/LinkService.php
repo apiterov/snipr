@@ -32,7 +32,7 @@ final class LinkService
         $this->db->query($query, [
             'url' => $url,
             'code' => $code,
-            'exp' => date('Y-m-d H:i:s', time() + 3600),
+            'exp' => date('Y-m-d H:i:s', time() + 86400),
         ]);
         return rtrim($_ENV['BASE_URL'], '/') . '/' . $code;
     }
