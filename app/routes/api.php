@@ -1,0 +1,14 @@
+<?php
+
+use App\Controller\LinkController;
+
+return [
+    '/link' => [
+        'controller' => LinkController::class,
+        'method' => 'createLink'
+    ],
+    '/([a-zA-Z0-9]{6})' => [
+        'controller' => LinkController::class,
+        'method' => 'getLink'
+    ]
+];
