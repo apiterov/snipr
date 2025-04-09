@@ -26,6 +26,8 @@ final class RouterService
 
     public function route(string $uri): void
     {
+        $uri = parse_url($uri, PHP_URL_PATH);
+
         foreach ($this->routes as $route => $action) {
             $routePattern = "~^" . $route . "$~";
             if (preg_match($routePattern, $uri, $matches)) {
@@ -34,7 +36,7 @@ final class RouterService
                 array_shift($matches);
 
                 $controllerInstance = new $controller();
-                call_user_func_array([ $controllerInstance, $method ], $matches);
+                call_user_func_array([$controllerInstance, $method], $matches);
                 return;
             }
         }

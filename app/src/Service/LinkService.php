@@ -28,12 +28,11 @@ final class LinkService
     public function create(string $url): ?string
     {
         $code = UriGenerator::generate($url);
-        $query = 'INSERT INTO links (original_url, short_code, created_at, expires_at) VALUES (:url, :code, :cre, :exp)';
+        $query = 'INSERT INTO links (original_url, short_code, expires_at) VALUES (:url, :code, :exp)';
         $this->db->query($query, [
             'url' => $url,
             'code' => $code,
-            'cre' => time(),
-            'exp' => time() + 3600,
+            'exp' => date('Y-m-d H:i:s', time() + 3600),
         ]);
         return $code;
     }
