@@ -18,7 +18,7 @@ final class EnvironmentService
 
     private function __construct()
     {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 3));
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
         $dotenv->load();
     }
 }
