@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortened URL</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            padding: 50px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 50%;
+            margin-bottom: 10px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            background-color: #121212;
+            color: white;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-bottom: 2px solid #66f;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        a {
+            color: #66f;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>snipr - generate a short url!</h1>
+
+<!-- Форма для ввода URL -->
+<form id="urlForm">
+    <label for="url">enter url:</label>
+    <input type="text" id="url" name="url" required />
+    <button type="submit">Generate</button>
+</form>
+
+{% if error %}
+    <p class="error">{{ error }}</p>
+{% endif %}
+
+<div id="shortened" style="display: none;">
+    <h2>short url:</h2>
+    <p><a id="shortened-link" href="" target="_blank"></a></p>
+</div>
+
+<script>
+    document.getElementById('urlForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const url = document.getElementById('url').value;
+        const response = await fetch(`/link?url=${encodeURIComponent(url)}`);
+        const data = await response.json();
+        console.log(data);
+
+        if (data.link) {
+            const shortenedLink = document.getElementById('shortened-link');
+            shortenedLink.href = data.link;
+            shortenedLink.textContent = data.link;
+            document.getElementById('shortened').style.display = 'block';
+        } else {
+            alert('Error: ' + data.message);
+        }
+    });
+</script>
+</body>
+</html>

@@ -20,14 +20,14 @@ class LinkController
     {
         $url = $_GET['url'] ?? null;
         if (!$url) {
-            $this->response(['message' => 'Invalid URL'], 400);
+            $this->responseJson(['message' => 'Invalid URL'], 400);
         }
 
         $link = $this->linkService->create($url);
         if (!$link) {
-            $this->response(['message' => 'Link could not be created'], 500);
+            $this->responseJson(['message' => 'Link could not be created'], 500);
         }
 
-        $this->response(['link' => $link], 200);
+        $this->responseJson(['link' => $link], 200);
     }
 }

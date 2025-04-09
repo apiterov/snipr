@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Service\TwigService;
 use App\Traits\HasResponse;
+use JetBrains\PhpStorm\NoReturn;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -12,20 +12,16 @@ class HomeController
 {
     use HasResponse;
 
-    private TwigService $twig;
-
-    public function __construct()
-    {
-        $this->twig = TwigService::init();
-    }
-
     /**
-     * @throws RuntimeError
      * @throws SyntaxError
+     * @throws RuntimeError
      * @throws LoaderError
      */
-    public function index(): void
+    #[NoReturn] public function index(): void
     {
-        $this->twig->render('home.twig');
+        $this->responseHtml(
+            page: 'home.twig',
+            status: 200
+        );
     }
 }

@@ -2,15 +2,33 @@
 
 namespace App\Traits;
 
+use App\Service\TwigService;
 use JetBrains\PhpStorm\NoReturn;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 trait HasResponse
 {
-    #[NoReturn] private function response($data, $status): void
+    #[NoReturn] private function responseJson($data, $status): void
     {
         http_response_code($status);
         header('Content-Type: application/json');
         echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
+    #[NoReturn] private function responseHtml($page, $status, $data = []): void
+    {
+        http_response_code($status);
+        header('Content-Type: text/html; charset=utf-8');
+        TwigService::init()
+            ->render($page, $data);
         exit;
     }
 }
