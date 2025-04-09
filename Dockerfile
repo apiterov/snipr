@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
 
-COPY ./src /var/www/html
+COPY app/src /var/www/html
 
 RUN apt-get install -y nginx
 
