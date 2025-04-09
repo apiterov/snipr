@@ -2,18 +2,16 @@
 
 namespace App\Service;
 
+use App\Contract\DatabaseServiceInterface;
 use App\Contract\LinkServiceInterface;
 use App\Util\UriGenerator;
 use PDO;
 
-class LinkService implements LinkServiceInterface
+readonly class LinkService implements LinkServiceInterface
 {
-    private DatabaseService $db;
-
-    public function __construct(DatabaseService $db)
-    {
-        $this->db = $db;
-    }
+    public function __construct(
+        private DatabaseServiceInterface $db
+    ) {}
 
     public function create(string $url): ?string
     {
