@@ -34,6 +34,6 @@ final class LinkService
             'code' => $code,
             'exp' => date('Y-m-d H:i:s', time() + 3600),
         ]);
-        return $code;
+        return rtrim($_ENV['BASE_URL'], '/') . '/' . $code;
     }
 }

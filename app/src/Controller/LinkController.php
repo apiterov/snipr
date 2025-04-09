@@ -19,7 +19,6 @@ class LinkController
     #[NoReturn] public function createLink(): void
     {
         $url = $_GET['url'] ?? null;
-
         if (!$url) {
             $this->response(['message' => 'Invalid URL'], 400);
         }
@@ -29,6 +28,6 @@ class LinkController
             $this->response(['message' => 'Link could not be created'], 500);
         }
 
-        $this->response(['link' => $_SERVER['HTTP_HOST'] . '/' . $link], 200);
+        $this->response(['link' => $link], 200);
     }
 }
