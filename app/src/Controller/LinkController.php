@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Contract\LinkServiceInterface;
 use App\Service\LinkService;
 use App\Traits\HasResponse;
 use JetBrains\PhpStorm\NoReturn;
@@ -9,12 +10,10 @@ use JetBrains\PhpStorm\NoReturn;
 class LinkController
 {
     use HasResponse;
-    private LinkService $linkService;
 
-    public function __construct()
-    {
-        $this->linkService = LinkService::init();
-    }
+    public function __construct(
+        private readonly LinkServiceInterface $linkService
+    ) {}
 
     #[NoReturn] public function createLink(): void
     {
@@ -38,7 +37,7 @@ class LinkController
             $this->responseJson(['message' => 'Invalid URL'], 400);
         }
 
-        $url = $this->linkService->get($code);
+        $url = $this->linkService->getOriginalUrl($code);
         $this->responseRedirect($url);
     }
 }
