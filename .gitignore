@@ -1,5 +1,5 @@
 composer.phar
-/vendor/
+/app/src/vendor/
 
 .idea/
-.env
+app/.env
