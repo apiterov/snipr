@@ -41,6 +41,6 @@ final class RouterService
             }
         }
 
-        $this->response(['message' => 'Not found'], 404);
+        $this->responseJson(['message' => 'Not found'], 404);
     }
 }
