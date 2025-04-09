@@ -30,4 +30,15 @@ class LinkController
 
         $this->responseJson(['link' => $link], 200);
     }
+
+    #[NoReturn] public function getLink(): void
+    {
+        $code = trim($_SERVER['REQUEST_URI'], '/');
+        if (!$code) {
+            $this->responseJson(['message' => 'Invalid URL'], 400);
+        }
+
+        $url = $this->linkService->get($code);
+        $this->responseRedirect($url);
+    }
 }

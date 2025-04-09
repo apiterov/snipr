@@ -31,4 +31,11 @@ trait HasResponse
             ->render($page, $data);
         exit;
     }
+
+    #[NoReturn] private function responseRedirect($page): void
+    {
+        http_response_code(308);
+        header('Location: ' . $page);
+        exit;
+    }
 }
