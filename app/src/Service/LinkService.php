@@ -28,7 +28,7 @@ final class LinkService
     public function create(string $url): ?string
     {
         $code = UriGenerator::generate($url);
-        $query = 'INSERT INTO links (original_url, short_code, expires_at) VALUES (:url, :code, :exp)';
+        $query = 'INSERT IGNORE INTO links (original_url, short_code, expires_at) VALUES (:url, :code, :exp)';
         $this->db->query($query, [
             'url' => $url,
             'code' => $code,
