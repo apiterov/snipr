@@ -1,0 +1,46 @@
+services:
+  app:
+    build: .
+    container_name: app
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - app-network
+    depends_on:
+      - mysql
+      - memcached
+    ports:
+      - "8080:80"
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./_docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    restart: always
+    ports:
+      - "11211:11211"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
