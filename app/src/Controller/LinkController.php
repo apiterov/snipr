@@ -10,10 +10,12 @@ use JetBrains\PhpStorm\NoReturn;
 class LinkController
 {
     use HasResponse;
+    private LinkServiceInterface $linkService;
 
-    public function __construct(
-        private readonly LinkServiceInterface $linkService
-    ) {}
+    public function __construct()
+    {
+        $this->linkService = new LinkService();
+    }
 
     #[NoReturn] public function createLink(): void
     {

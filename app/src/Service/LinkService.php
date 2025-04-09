@@ -9,9 +9,11 @@ use PDO;
 
 readonly class LinkService implements LinkServiceInterface
 {
-    public function __construct(
-        private DatabaseServiceInterface $db
-    ) {}
+    private DatabaseServiceInterface $db;
+
+    public function __construct() {
+        $this->db = new DatabaseService();
+    }
 
     public function create(string $url): ?string
     {
