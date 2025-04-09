@@ -2,8 +2,11 @@
 
 namespace App\Service;
 
+use App\Traits\HasResponse;
+
 final class RouterService
 {
+    use HasResponse;
     private array $routes;
 
     private static ?self $instance = null;
@@ -36,12 +39,6 @@ final class RouterService
             }
         }
 
-        $this->notFound();
-    }
-
-    private function notFound(): void
-    {
-        http_response_code(404);
-        echo json_encode(['message' => 'Not Found']);
+        $this->response(['message' => 'Not found'], 404);
     }
 }

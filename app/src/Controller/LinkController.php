@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Service\LinkService;
+use App\Traits\HasResponse;
+use JetBrains\PhpStorm\NoReturn;
 
 class LinkController
 {
+    use HasResponse;
     private LinkService $linkService;
 
     public function __construct()
@@ -13,9 +16,9 @@ class LinkController
         $this->linkService = LinkService::init();
     }
 
-    public function createLink(): void
+    #[NoReturn] public function createLink(): void
     {
-        $url = $_GET['url'];
+        $url = $_GET['url'] ?? null;
 
         if (!$url) {
             $this->response(['message' => 'Invalid URL'], 400);
@@ -27,11 +30,5 @@ class LinkController
         }
 
         $this->response(['link' => $_SERVER['HTTP_HOST'] . '/' . $link], 200);
-    }
-
-    private function response($data, $status): void
-    {
-        http_response_code($status);
-        echo json_encode($data);
     }
 }
