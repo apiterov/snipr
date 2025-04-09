@@ -2,26 +2,17 @@
 
 namespace App\Service;
 
+use App\Contract\RouterServiceInterface;
 use App\Traits\HasResponse;
 
-final class RouterService
+readonly class RouterService implements RouterServiceInterface
 {
     use HasResponse;
+
     private array $routes;
 
-    private static ?self $instance = null;
-
-    private function __construct()
-    {
+    public function __construct() {
         $this->routes = require __DIR__ . '/../../routes/api.php';
-    }
-
-    public static function init(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
     public function route(string $uri): void

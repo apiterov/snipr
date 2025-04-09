@@ -5,7 +5,8 @@ use App\Service\RouterService;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-EnvironmentService::init();
+new EnvironmentService()
+    ->init();
 
-RouterService::init()
+new RouterService()
     ->route($_SERVER['REQUEST_URI']);

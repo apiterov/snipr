@@ -9,11 +9,11 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-class TwigService implements TwigServiceInterface
+readonly class TwigService implements TwigServiceInterface
 {
-    private function __construct(
-        private Environment $twig
-    ) {
+    private Environment $twig;
+
+    private function __construct() {
         $loader = new FilesystemLoader('views');
         $this->twig = new Environment($loader);
     }

@@ -6,11 +6,11 @@ use App\Contract\DatabaseServiceInterface;
 use PDO;
 use PDOStatement;
 
-class DatabaseService implements DatabaseServiceInterface
+readonly class DatabaseService implements DatabaseServiceInterface
 {
-    private function __construct(
-        private PDO $conn
-    ) {
+    private PDO $conn;
+
+    private function __construct() {
         $data = sprintf('mysql:host=%s;dbname=%s', $_ENV['MYSQL_HOST'], $_ENV['MYSQL_DATABASE']);
         $this->conn = new PDO($data, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
