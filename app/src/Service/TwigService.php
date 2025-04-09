@@ -9,7 +9,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-readonly class TwigService implements TwigServiceInterface
+class TwigService implements TwigServiceInterface
 {
     private Environment $twig;
 

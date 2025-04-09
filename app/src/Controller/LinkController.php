@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Contract\LinkServiceInterface;
+use App\Service\DatabaseService;
 use App\Service\LinkService;
 use App\Traits\HasResponse;
 use JetBrains\PhpStorm\NoReturn;
@@ -14,7 +15,9 @@ class LinkController
 
     public function __construct()
     {
-        $this->linkService = new LinkService();
+        $this->linkService = new LinkService(
+            new DatabaseService()
+        );
     }
 
     #[NoReturn] public function createLink(): void

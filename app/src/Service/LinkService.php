@@ -7,13 +7,11 @@ use App\Contract\LinkServiceInterface;
 use App\Util\UriGenerator;
 use PDO;
 
-readonly class LinkService implements LinkServiceInterface
+class LinkService implements LinkServiceInterface
 {
-    private DatabaseServiceInterface $db;
-
-    public function __construct() {
-        $this->db = new DatabaseService();
-    }
+    public function __construct(
+        private readonly DatabaseServiceInterface $db
+    ) {}
 
     public function create(string $url): ?string
     {

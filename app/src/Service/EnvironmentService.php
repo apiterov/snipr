@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Contract\EnvironmentServiceInterface;
 use Dotenv\Dotenv;
 
-readonly class EnvironmentService implements EnvironmentServiceInterface
+class EnvironmentService implements EnvironmentServiceInterface
 {
     public function init(): void
     {

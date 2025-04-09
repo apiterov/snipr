@@ -5,7 +5,7 @@ namespace App\Service;
 use App\Contract\RouterServiceInterface;
 use App\Traits\HasResponse;
 
-readonly class RouterService implements RouterServiceInterface
+class RouterService implements RouterServiceInterface
 {
     use HasResponse;
 

@@ -6,7 +6,7 @@ use App\Contract\DatabaseServiceInterface;
 use PDO;
 use PDOStatement;
 
-readonly class DatabaseService implements DatabaseServiceInterface
+class DatabaseService implements DatabaseServiceInterface
 {
     private PDO $conn;
 
