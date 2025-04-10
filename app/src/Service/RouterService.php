@@ -2,28 +2,28 @@
 
 namespace App\Service;
 
+use App\Contract\RouterServiceInterface;
 use App\Traits\HasResponse;
+use DI\Container;
+use DI\DependencyException;
+use DI\NotFoundException;
 
-final class RouterService
+class RouterService implements RouterServiceInterface
 {
     use HasResponse;
+
     private array $routes;
 
-    private static ?self $instance = null;
-
-    private function __construct()
-    {
+    public function __construct(
+        private readonly Container $container
+    ) {
         $this->routes = require __DIR__ . '/../../routes/api.php';
     }
 
-    public static function init(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
+    /**
+     * @throws DependencyException
+     * @throws NotFoundException
+     */
     public function route(string $uri): void
     {
         $uri = parse_url($uri, PHP_URL_PATH);
@@ -35,7 +35,7 @@ final class RouterService
                 $method = $action['method'];
                 array_shift($matches);
 
-                $controllerInstance = new $controller();
+                $controllerInstance = $this->container->get($controller);
                 call_user_func_array([$controllerInstance, $method], $matches);
                 return;
             }

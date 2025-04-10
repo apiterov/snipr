@@ -5,7 +5,10 @@ use App\Service\RouterService;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-EnvironmentService::init();
+$container = require __DIR__ . '/bootstrap.php';
 
-RouterService::init()
+$container->get(EnvironmentService::class)
+    ->init();
+
+$container->get(RouterService::class)
     ->route($_SERVER['REQUEST_URI']);

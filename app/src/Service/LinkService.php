@@ -2,29 +2,16 @@
 
 namespace App\Service;
 
+use App\Contract\DatabaseServiceInterface;
+use App\Contract\LinkServiceInterface;
 use App\Util\UriGenerator;
 use PDO;
 
-final class LinkService
+class LinkService implements LinkServiceInterface
 {
-    private DatabaseService $db;
-
-    private static ?self $instance = null;
-
-    private function __construct(DatabaseService $db)
-    {
-        $this->db = $db;
-    }
-
-    public static function init(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self(
-                DatabaseService::init()
-            );
-        }
-        return self::$instance;
-    }
+    public function __construct(
+        private readonly DatabaseServiceInterface $db
+    ) {}
 
     public function create(string $url): ?string
     {
@@ -38,7 +25,7 @@ final class LinkService
         return rtrim($_ENV['BASE_URL'], '/') . '/' . $code;
     }
 
-    public function get(string $code): ?string
+    public function getOriginalUrl(string $code): ?string
     {
         $query = 'SELECT original_url FROM links WHERE short_code = :code';
         $stmt = $this->db->query($query, [

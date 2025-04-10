@@ -2,28 +2,18 @@
 
 namespace App\Service;
 
+use App\Contract\DatabaseServiceInterface;
 use PDO;
 use PDOStatement;
 
-final class DatabaseService
+class DatabaseService implements DatabaseServiceInterface
 {
-    private static ?self $instance = null;
-
     private PDO $conn;
 
-    private function __construct()
-    {
+    public function __construct() {
         $data = sprintf('mysql:host=%s;dbname=%s', $_ENV['MYSQL_HOST'], $_ENV['MYSQL_DATABASE']);
         $this->conn = new PDO($data, $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
         $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-
-    public static function init(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
-        return self::$instance;
     }
 
     public function query(string $query, array $params = []): PDOStatement

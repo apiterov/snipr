@@ -2,23 +2,13 @@
 
 namespace App\Service;
 
+use App\Contract\EnvironmentServiceInterface;
 use Dotenv\Dotenv;
 
-final class EnvironmentService
+class EnvironmentService implements EnvironmentServiceInterface
 {
-    private static EnvironmentService $instance;
-
-    public static function init(): EnvironmentService
+    public function init(): void
     {
-        if (!isset(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
-
-    private function __construct()
-    {
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-        $dotenv->load();
+        Dotenv::createImmutable(dirname(__DIR__, 2))->load();
     }
 }

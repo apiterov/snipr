@@ -27,7 +27,7 @@ trait HasResponse
     {
         http_response_code($status);
         header('Content-Type: text/html; charset=utf-8');
-        TwigService::init()
+        new TwigService()
             ->render($page, $data);
         exit;
     }
