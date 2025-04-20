@@ -17,7 +17,7 @@ services:
     container_name: mysql
     restart: always
     env_file:
-      - ./app/.env
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -34,9 +34,10 @@ services:
   memcached:
     image: memcached:latest
     container_name: memcached
-    restart: always
+    env_file:
+      - .env
     ports:
-      - "11211:11211"
+      - "${CACHE_PORT}:${CACHE_PORT}"
     networks:
       - app-network
 
