@@ -2,4 +2,4 @@ composer.phar
 /app/src/vendor/
 
 .idea/
-app/.env
+.env

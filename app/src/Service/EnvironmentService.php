@@ -9,6 +9,6 @@ class EnvironmentService implements EnvironmentServiceInterface
 {
     public function init(): void
     {
-        Dotenv::createImmutable(dirname(__DIR__, 2))->load();
+        Dotenv::createImmutable(dirname(__DIR__, 3))->load();
     }
 }
