@@ -41,6 +41,12 @@ class LinkService implements LinkServiceInterface
         ]);
         $stmt->setFetchMode(PDO::FETCH_OBJ);
         $row = $stmt->fetch();
-        return $row->original_url;
+
+        if ($row) {
+            $this->cache->set($code, $row->original_url);
+            return $row->original_url;
+        }
+
+        return null;
     }
 }
