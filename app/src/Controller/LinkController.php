@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Contract\LinkServiceInterface;
-use App\Service\DatabaseService;
-use App\Service\LinkService;
 use App\Traits\HasResponse;
 use JetBrains\PhpStorm\NoReturn;
 

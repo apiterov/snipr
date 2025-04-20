@@ -19,7 +19,10 @@ use function DI\get;
 $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions([
     LinkServiceInterface::class => create(LinkService::class)
-        ->constructor(get(DatabaseServiceInterface::class)),
+        ->constructor(
+            get(DatabaseServiceInterface::class),
+            get(CacheServiceInterface::class)
+        ),
     RouterServiceInterface::class => create(RouterService::class),
     DatabaseServiceInterface::class => create(DatabaseService::class),
     TwigServiceInterface::class => create(TwigService::class),
