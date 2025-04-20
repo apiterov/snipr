@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Contract\CacheServiceInterface;
 use App\Contract\DatabaseServiceInterface;
 use App\Contract\LinkServiceInterface;
 use App\Util\UriGenerator;
@@ -10,12 +11,14 @@ use PDO;
 class LinkService implements LinkServiceInterface
 {
     public function __construct(
-        private readonly DatabaseServiceInterface $db
+        private readonly DatabaseServiceInterface $db,
+        private readonly CacheServiceInterface $cache
     ) {}
 
     public function create(string $url): ?string
     {
         $code = UriGenerator::generate($url);
+        $this->cache->set($code, $url);
         $query = 'INSERT IGNORE INTO links (original_url, short_code, expires_at) VALUES (:url, :code, :exp)';
         $this->db->query($query, [
             'url' => $url,
@@ -27,6 +30,11 @@ class LinkService implements LinkServiceInterface
 
     public function getOriginalUrl(string $code): ?string
     {
+        $cacheUrl = $this->cache->get($code);
+        if ($cacheUrl) {
+            return $cacheUrl;
+        }
+
         $query = 'SELECT original_url FROM links WHERE short_code = :code';
         $stmt = $this->db->query($query, [
             'code' => $code,
