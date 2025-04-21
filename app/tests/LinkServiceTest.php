@@ -1,12 +1,12 @@
 <?php
 
 use App\Contract\CacheServiceInterface;
+use App\Contract\DatabaseServiceInterface;
 use App\Contract\LinkServiceInterface;
 use App\Service\LinkService;
 use App\Util\UriGenerator;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use App\Contract\DatabaseServiceInterface;
+use PHPUnit\Framework\TestCase;
 
 class LinkServiceTest extends TestCase
 {
