@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Contract\CacheServiceInterface;
 use App\Contract\DatabaseServiceInterface;
 use App\Contract\LinkServiceInterface;
+use App\Exception\InvalidUrlException;
 use App\Util\UriGenerator;
 use PDO;
 
@@ -15,6 +16,9 @@ class LinkService implements LinkServiceInterface
         private readonly CacheServiceInterface $cache
     ) {}
 
+    /**
+     * @throws InvalidUrlException
+     */
     public function create(string $url): ?string
     {
         $code = UriGenerator::generate($url);
