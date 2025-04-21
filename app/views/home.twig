@@ -74,7 +74,7 @@
 <!-- Форма для ввода URL -->
 <form id="urlForm">
     <label for="url">enter url:</label>
-    <input type="text" id="url" name="url" required />
+    <input type="text" id="url" name="url" required/>
     <button type="submit">Generate</button>
 </form>
 
@@ -88,7 +88,7 @@
 </div>
 
 <script>
-    document.getElementById('urlForm').addEventListener('submit', async function(event) {
+    document.getElementById('urlForm').addEventListener('submit', async function (event) {
         event.preventDefault();
         const url = document.getElementById('url').value;
         const response = await fetch(`/link?url=${encodeURIComponent(url)}`);

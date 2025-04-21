@@ -8,14 +8,6 @@ class CacheServiceTest extends TestCase
 {
     private MockObject $cacheServiceMock;
 
-    /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
-     */
-    protected function setUp(): void
-    {
-        $this->cacheServiceMock = $this->createMock(CacheServiceInterface::class);
-    }
-
     public function testSet(): void
     {
         $this->cacheServiceMock->method('set')->willReturn(true);
@@ -35,5 +27,13 @@ class CacheServiceTest extends TestCase
         $this->cacheServiceMock->method('delete')->willReturn(true);
         $result = $this->cacheServiceMock->delete('key');
         $this->assertTrue($result);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    protected function setUp(): void
+    {
+        $this->cacheServiceMock = $this->createMock(CacheServiceInterface::class);
     }
 }

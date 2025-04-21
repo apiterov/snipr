@@ -13,7 +13,9 @@ class LinkController
 
     public function __construct(
         private readonly LinkServiceInterface $linkService
-    ) {}
+    )
+    {
+    }
 
     #[NoReturn] public function createLink(): void
     {

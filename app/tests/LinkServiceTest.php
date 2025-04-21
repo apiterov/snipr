@@ -3,6 +3,7 @@
 use App\Contract\CacheServiceInterface;
 use App\Contract\DatabaseServiceInterface;
 use App\Contract\LinkServiceInterface;
+use App\Exception\InvalidUrlException;
 use App\Service\LinkService;
 use App\Util\UriGenerator;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,17 +16,7 @@ class LinkServiceTest extends TestCase
     private MockObject $dbMock;
 
     /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
-     */
-    protected function setUp(): void
-    {
-        $this->cacheServiceMock = $this->createMock(CacheServiceInterface::class);
-        $this->dbMock = $this->createMock(DatabaseServiceInterface::class);
-        $this->linkService = new LinkService($this->dbMock, $this->cacheServiceMock);
-    }
-
-    /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
+     * @throws \PHPUnit\Framework\MockObject\Exception|InvalidUrlException
      */
     public function testGetOriginalUrlFromCache(): void
     {
@@ -42,14 +33,14 @@ class LinkServiceTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
+     * @throws \PHPUnit\Framework\MockObject\Exception|InvalidUrlException
      */
     public function testGetOriginalUrlFromDatabaseWhenNotInCache(): void
     {
         $expectedUrl = 'https://example.com';
 
         $pdoStatementMock = $this->createMock(PDOStatement::class);
-        $pdoStatementMock->method('fetch')->willReturn((object) ['original_url' => $expectedUrl]);
+        $pdoStatementMock->method('fetch')->willReturn((object)['original_url' => $expectedUrl]);
 
         $this->cacheServiceMock->method('get')->willReturn(null);
         $this->dbMock->method('query')->willReturn($pdoStatementMock);
@@ -64,7 +55,7 @@ class LinkServiceTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\MockObject\Exception
+     * @throws \PHPUnit\Framework\MockObject\Exception|InvalidUrlException
      */
     public function testCacheMissAndInsert(): void
     {
@@ -83,5 +74,15 @@ class LinkServiceTest extends TestCase
         $this->linkService->create($url);
 
         $this->assertTrue(true);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\MockObject\Exception
+     */
+    protected function setUp(): void
+    {
+        $this->cacheServiceMock = $this->createMock(CacheServiceInterface::class);
+        $this->dbMock = $this->createMock(DatabaseServiceInterface::class);
+        $this->linkService = new LinkService($this->dbMock, $this->cacheServiceMock);
     }
 }

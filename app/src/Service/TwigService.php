@@ -13,7 +13,8 @@ class TwigService implements TwigServiceInterface
 {
     private Environment $twig;
 
-    public function __construct() {
+    public function __construct()
+    {
         $loader = new FilesystemLoader('views');
         $this->twig = new Environment($loader);
     }

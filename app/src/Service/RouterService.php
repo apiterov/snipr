@@ -16,7 +16,8 @@ class RouterService implements RouterServiceInterface
 
     public function __construct(
         private readonly Container $container
-    ) {
+    )
+    {
         $this->routes = require __DIR__ . '/../../routes/api.php';
     }
 

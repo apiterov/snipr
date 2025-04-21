@@ -13,8 +13,10 @@ class LinkService implements LinkServiceInterface
 {
     public function __construct(
         private readonly DatabaseServiceInterface $db,
-        private readonly CacheServiceInterface $cache
-    ) {}
+        private readonly CacheServiceInterface    $cache
+    )
+    {
+    }
 
     /**
      * @throws InvalidUrlException
